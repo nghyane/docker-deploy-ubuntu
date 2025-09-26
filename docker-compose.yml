@@ -1,6 +1,12 @@
 services:
   app:
-    image: ghcr.io/nghyanenghyane/truyenqq-clone:latest
+    # Option 1: Use pre-built image (update with your actual image)
+    # image: ghcr.io/nghyanenghyanenghyane/truyenqq-clone:latest
+
+    # Option 2: Build from Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: app
     env_file:
       - .env

@@ -30,7 +30,11 @@ fi
 
 # Check if already logged into GitHub Container Registry
 echo "Checking GitHub Container Registry access..."
-if ! docker pull ghcr.io/nghyane/truyenqq-clone:latest &>/dev/null 2>&1; then
+IMAGE="ghcr.io/nghyane/truyenqq-clone:latestlatest"
+
+if docker pull "$IMAGE" &>/dev/null 2>&1; then
+    echo "✓ Already authenticated to GitHub Container Registry"
+else
     echo ""
     echo "========================================="
     echo "GitHub Container Registry Login Required"
@@ -48,15 +52,28 @@ if ! docker pull ghcr.io/nghyane/truyenqq-clone:latest &>/dev/null 2>&1; then
         gh auth token | docker login ghcr.io -u $(gh api user -q .login) --password-stdin
     fi
 
-    # Verify login worked
+    # Verify login worked with detailed error
     echo "Verifying authentication..."
-    if ! docker pull ghcr.io/nghyane/truyenqq-clone:latest &>/dev/null 2>&1; then
-        echo "Authentication failed. Please try again."
+    echo "Attempting to pull: $IMAGE"
+
+    if docker pull "$IMAGE"; then
+        echo "✓ Authentication successful!"
+    else
+        echo ""
+        echo "❌ Failed to pull image. Possible issues:"
+        echo "1. Image doesn't exist with tag 'latest'"
+        echo "2. Package visibility needs to be set to public"
+        echo "3. Token doesn't have 'read:packages' permission"
+        echo ""
+        echo "Debug info:"
+        docker pull "$IMAGE" 2>&1 | tail -5
+        echo ""
+        echo "Try:"
+        echo "- Check if image exists at: https://github.com/nghyane/truyenqq-clone/pkgs/container/truyenqq-clone"
+        echo "- Verify package is public or you have access"
+        echo "- Use a different tag if 'latest' doesn't exist"
         exit 1
     fi
-    echo "✓ Authentication successful!"
-else
-    echo "✓ Already authenticated to GitHub Container Registry"
 fi
 
 docker --version && docker compose version

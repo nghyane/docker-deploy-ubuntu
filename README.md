@@ -24,26 +24,6 @@ nano .env
 docker compose up -d
 ```
 
-### Option 2: Build from Source
-```bash
-# Clone your app repo
-git clone YOUR_APP_REPO
-cd YOUR_APP_REPO
-
-# Copy setup files
-curl -O https://raw.githubusercontent.com/nghyane/prod-setup/main/docker-compose.yml
-curl -O https://raw.githubusercontent.com/nghyane/prod-setup/main/install.sh
-curl -O https://raw.githubusercontent.com/nghyane/prod-setup/main/.env.example
-
-# Create Dockerfile (if not exists)
-cp Dockerfile.example Dockerfile
-# Edit Dockerfile for your app
-
-# Deploy
-sudo bash install.sh
-docker compose up -d --build
-```
-
 ## Commands
 
 ```bash

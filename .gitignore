@@ -1,0 +1,35 @@
+# Environment files
+.env
+.env.local
+.env.production
+*.env
+
+# Docker
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp files
+*.tmp
+*.bak
+*.backup
+*~
+
+# Secrets
+*.pem
+*.key
+*.crt
+*.pfx

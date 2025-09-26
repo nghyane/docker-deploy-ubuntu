@@ -1,13 +1,13 @@
-# Docker Deploy Ubuntu
+# Production Setup
 
-Quick Docker deployment script for Ubuntu servers with GitHub Container Registry support.
+Quick Docker deployment scripts for production environments.
 
 ## Usage
 
 ```bash
 # Clone specific branch for your project
-git clone -b PROJECT_NAME https://github.com/nghyane/docker-deploy-ubuntu.git
-cd docker-deploy-ubuntu
+git clone -b PROJECT_NAME https://github.com/nghyane/prod-setup.git
+cd prod-setup
 
 # Install Docker & authenticate
 sudo bash install.sh

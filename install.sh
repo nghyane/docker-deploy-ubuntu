@@ -30,7 +30,7 @@ fi
 
 # Check if already logged into GitHub Container Registry
 echo "Checking GitHub Container Registry access..."
-if ! docker pull ghcr.io/nghyane/truyenqq-clone:main &>/dev/null 2>&1; then
+if ! docker pull ghcr.io/nghyane/truyenqq-clone:latest &>/dev/null 2>&1; then
     echo ""
     echo "========================================="
     echo "GitHub Container Registry Login Required"
@@ -50,7 +50,7 @@ if ! docker pull ghcr.io/nghyane/truyenqq-clone:main &>/dev/null 2>&1; then
 
     # Verify login worked
     echo "Verifying authentication..."
-    if ! docker pull ghcr.io/nghyane/truyenqq-clone:main &>/dev/null 2>&1; then
+    if ! docker pull ghcr.io/nghyane/truyenqq-clone:latest &>/dev/null 2>&1; then
         echo "Authentication failed. Please try again."
         exit 1
     fi

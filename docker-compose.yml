@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/nghiahoang/truyenqq-clone:latest
+    image: ghcr.io/nghyane/truyenqq-clone:latest
     env_file:
       - .env
     restart: unless-stopped

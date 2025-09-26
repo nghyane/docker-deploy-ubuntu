@@ -3,7 +3,7 @@
 
 [[ $EUID -ne 0 ]] && { echo "Run with sudo"; exit 1; }
 
-# Install Docker first if not available
+# Install Docker if not available
 if ! command -v docker &>/dev/null; then
     echo "Installing Docker..."
     apt-get update
@@ -20,43 +20,6 @@ if ! command -v docker &>/dev/null; then
 
     systemctl enable --now docker
     [ -n "$SUDO_USER" ] && usermod -aG docker $SUDO_USER
-fi
-
-# Install GitHub CLI if not exists
-if ! command -v gh &>/dev/null; then
-    echo "Installing GitHub CLI..."
-    apt-get update && apt-get install -y gh
-fi
-
-# Check if already logged into GitHub Container Registry
-echo "Checking GitHub Container Registry access..."
-if ! docker pull ghcr.io/nghyane/truyenqq-clone:latest &>/dev/null 2>&1; then
-    echo ""
-    echo "========================================="
-    echo "GitHub Container Registry Login Required"
-    echo "========================================="
-    echo ""
-
-    # Check if already authenticated with gh
-    if gh auth status &>/dev/null 2>&1; then
-        echo "GitHub CLI already authenticated, logging into Docker registry..."
-        gh auth token | docker login ghcr.io -u $(gh api user -q .login) --password-stdin
-    else
-        echo "Opening browser for GitHub login..."
-        gh auth login -h github.com -p https -w
-        echo "Logging into Docker registry..."
-        gh auth token | docker login ghcr.io -u $(gh api user -q .login) --password-stdin
-    fi
-
-    # Verify login worked
-    echo "Verifying authentication..."
-    if ! docker pull ghcr.io/nghyane/truyenqq-clone:latest &>/dev/null 2>&1; then
-        echo "Authentication failed. Please try again."
-        exit 1
-    fi
-    echo "✓ Authentication successful!"
-else
-    echo "✓ Already authenticated to GitHub Container Registry"
 fi
 
 docker --version && docker compose version

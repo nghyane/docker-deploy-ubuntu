@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/nghyanenghyane/truyenqq-clone:latest
+    image: ghcr.io/nghyane/truyenqq-clone:latest
     container_name: app
     env_file:
       - .env

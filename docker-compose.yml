@@ -1,11 +1,25 @@
 services:
   app:
-    image: ghcr.io/nghyane/truyenqq-clone:latest
+    image: ghcr.io/nghyanenghyane/truyenqq-clone:latest
+    container_name: app
     env_file:
       - .env
+    ports:
+      - "3000:3000"
+    networks:
+      - tunnel-network
     restart: unless-stopped
 
   tunnel:
     image: cloudflare/cloudflared:latest
+    container_name: cloudflare-tunnel
     command: tunnel run --token ${CLOUDFLARED_TOKEN}
+    networks:
+      - tunnel-network
+    depends_on:
+      - app
     restart: unless-stopped
+
+networks:
+  tunnel-network:
+    driver: bridge
